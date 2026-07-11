@@ -206,18 +206,25 @@
 						</header>
 						<div class="content">
 							<p><strong>Let's connect.</strong> Whether it's a role, an internship, or just a question about one of the projects, drop a message below or reach me directly.</p>
-							<form>
+
+							<div id="form-success" style="display:none; padding:1rem 1.5rem; margin-bottom:1.5rem; border:1px solid #4FB286; border-radius:6px; color:#2f6b52; background:rgba(79,178,134,0.08);">
+								<strong>Thanks, your message has been sent.</strong> I'll get back to you soon.
+							</div>
+
+							<form id="contact-form" action="https://formspree.io/f/mgojggvq" method="POST">
 								<div class="fields">
 									<div class="field half">
-										<input type="text" name="name" id="name" placeholder="Name" />
+										<input type="text" name="name" id="name" placeholder="Name" required />
 									</div>
 									<div class="field half">
-										<input type="email" name="email" id="email" placeholder="Email" />
+										<input type="email" name="email" id="email" placeholder="Email" required />
 									</div>
 									<div class="field">
-										<textarea name="message" id="message" placeholder="Message" rows="7"></textarea>
+										<textarea name="message" id="message" placeholder="Message" rows="7" required></textarea>
 									</div>
 								</div>
+								<input type="hidden" name="_subject" value="New message from portfolio site" />
+								<input type="hidden" name="_next" value="https://mahendarreddy01112004-lgtm.github.io/?sent=true#contact-section" />
 								<ul class="actions">
 									<li><input type="submit" value="Send Message" class="button primary" /></li>
 								</ul>
@@ -261,6 +268,20 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+				(function() {
+					var params = new URLSearchParams(window.location.search);
+					if (params.get('sent') === 'true') {
+						var successBox = document.getElementById('form-success');
+						var form = document.getElementById('contact-form');
+						if (successBox) successBox.style.display = 'block';
+						if (form) form.style.display = 'none';
+						// clean the URL so refreshing doesn't keep showing the banner
+						var cleanUrl = window.location.pathname + '#contact-section';
+						window.history.replaceState({}, document.title, cleanUrl);
+					}
+				})();
+			</script>
 
 	</body>
 </html>
